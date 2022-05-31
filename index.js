@@ -4,6 +4,9 @@ const routerApi = require('./routes')
 
 const  {errorHandler, logErrors, boomErrorHandler} = require('./middlewares/error.handler')
 
+const cors = require('cors');
+
+
 const app = express();
 const port = 3000;
 
@@ -18,6 +21,21 @@ app.use(express.json())
 //   res.send('Hey!!! Express i am a new route')
 // })
 
+
+const whitelist = ['http://127.0.0.1:8080', 'https://myapp.co','http://localhost:3000/'];
+const options = {
+  origin: (origin, callback)  => {
+    console.log('originnnnn ===========')
+    console.log(origin)
+    console.log('originnnnn')
+    if (whitelist.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('no permitido'));
+    }
+  }
+}
+app.use(cors(options));
 
 routerApi(app)
 
