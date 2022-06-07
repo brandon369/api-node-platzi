@@ -1,14 +1,18 @@
 const express = require("express");
 
 const ProductService = require("./../services/product.service");
-const validatorHandler = require('../middlewares/validator.handler')
-const {getProductSchema, updateProductSchema, createProductSchema} = require('../schemas/product.schema')
+const validatorHandler = require("../middlewares/validator.handler");
+const {
+  getProductSchema,
+  updateProductSchema,
+  createProductSchema,
+} = require("../schemas/product.schema");
 
 const router = express.Router();
 const service = new ProductService();
 
 router.get("/", async (req, res) => {
-  const {size} = req.query;
+  const { size } = req.query;
   const products = await service.find();
   res.json(products);
 });
@@ -17,21 +21,24 @@ router.get("/filter", (req, res) => {
   res.send("filter");
 });
 
-router.get("/:id",
-  validatorHandler(getProductSchema, 'params'),
+router.get(
+  "/:id",
+  validatorHandler(getProductSchema, "params"),
   async (req, res, next) => {
     try {
-      const {id} = req.params;
+      const { id } = req.params;
       const product = await service.findOne(id);
       res.json(product);
     } catch (e) {
       next(e);
     }
-  });
+  }
+);
 
-router.post("/",
-  validatorHandler(createProductSchema, 'body')
-  , async (req, res) => {
+router.post(
+  "/",
+  validatorHandler(createProductSchema, "body"),
+  async (req, res) => {
     try {
       const body = req.body;
       const newProduct = await service.create(body);
@@ -41,21 +48,24 @@ router.post("/",
         message: e,
       });
     }
-  });
+  }
+);
 
-router.patch("/:id",
-  validatorHandler(getProductSchema, 'params'),
-  validatorHandler(updateProductSchema, 'body'),
+router.patch(
+  "/:id",
+  validatorHandler(getProductSchema, "params"),
+  validatorHandler(updateProductSchema, "body"),
   async (req, res, next) => {
     try {
-      const {id} = req.params;
+      const { id } = req.params;
       const body = req.body;
       const product = await service.update(id, body);
       res.json(product);
     } catch (e) {
       next(e);
     }
-  });
+  }
+);
 
 /*
 router.put('/:id', (req, res) => {
@@ -74,7 +84,7 @@ router.put('/:id', (req, res) => {
 
 router.delete("/:id", async (req, res, next) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const product = await service.delete(id);
     res.json(product);
   } catch (error) {

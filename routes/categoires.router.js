@@ -1,43 +1,38 @@
-const express = require('express')
+const express = require("express");
 const faker = require("faker");
 
+const router = express.Router();
 
-const router = express.Router()
-
-
-router.get('/', (req, res) => {
-  const {categoryId} = req.params
+router.get("/", (req, res) => {
+  const { categoryId } = req.params;
   res.json([
     {
       categoryId,
-      category: 'Food',
-      products: []
+      category: "Food",
+      products: [],
     },
     {
       categoryId,
-      category: 'Games',
-      products: []
+      category: "Games",
+      products: [],
     },
     {
       categoryId,
-      category: 'clothes',
-      products: []
+      category: "clothes",
+      products: [],
     },
-  ])
-})
+  ]);
+});
 
-router.get('/:categoryId', (req, res) => {
-  const {categoryId} = req.params
+router.get("/:categoryId", (req, res) => {
+  const { categoryId } = req.params;
   res.json([
     {
       categoryId,
-      category: 'Food',
-      products: []
-    }
-  ])
-})
+      category: "Food",
+      products: [],
+    },
+  ]);
+});
 
-
-
-
-module.exports = router
+module.exports = router;

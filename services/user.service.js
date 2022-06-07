@@ -1,13 +1,13 @@
-const boom = require('@hapi/boom');
+const boom = require("@hapi/boom");
 
 // const getConnection = require('../libs/postgres');
-const pool = require('../libs/postgres.pool')
+const pool = require("../libs/postgres.pool");
 
 class UserService {
   constructor() {
-    this.pool = pool
+    this.pool = pool;
 
-    this.pool.on('error', (err) => console.log(err))
+    this.pool.on("error", (err) => console.log(err));
   }
 
   async create(data) {
@@ -19,13 +19,13 @@ class UserService {
     // const rta = await client.query('SELECT * FROM task');
     // return rta.rows;
 
-    const query = 'SELECT * FROM task'
-    const rta = await this.pool.query(query)
-    return rta.rows
+    const query = "SELECT * FROM task";
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 
   async findOne(id) {
-    return {id};
+    return { id };
   }
 
   async update(id, changes) {
@@ -36,9 +36,8 @@ class UserService {
   }
 
   async delete(id) {
-    return {id};
+    return { id };
   }
 }
 
 module.exports = UserService;
-
